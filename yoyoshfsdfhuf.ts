@@ -25,6 +25,8 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         },
       },
       async authorize(credentials): Promise<User | null> {
+        console.log(credentials, "from auth");
+
         const backendLoginUrl = "http://localhost:8080/api/login";
         try {
           // 2. Make HTTP POST request to your backend
@@ -41,13 +43,11 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
           }
           // 3. Process the response from the backend
           const userData = await response.json();
-          console.log(userData, "Response after login in auth.js");
-
           if (userData.user && userData.accessToken) {
             // The user is valid and we have received a JWT from backend. Add user data to session
             return {
               id: userData.user.id,
-              name: userData.user.userName,
+              name: userData.user.name,
               email: userData.user.email,
             };
           } else {
@@ -68,7 +68,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       if (pathname === "/middleware-example") return !!auth;
       return true;
     },
-    async jwt({ token, trigger, session, account, profile }): Promise<JWT> {
+    async jwt({ token, trigger, session, account, profile }) {
       if (account?.provider === "google") {
         // 1. Make HTTP POST request to social login endpoint in your backend
         const backendSocialLoginUrl = "http://localhost:8080/api/social-login";
@@ -79,8 +79,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
             body: JSON.stringify({
               name: profile?.name,
               email: profile?.email,
-              image: profile?.picture,
-              provider: account?.provider,
+              image: profile?.image,
             }),
           });
 
@@ -92,8 +91,6 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
             return {
               ...token,
               name: userData.user.name,
-              id: userData.user.id,
-              accessToken: userData.accessToken,
             };
           }
           return token;
@@ -103,36 +100,28 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         }
       }
       if (trigger === "update") token.name = session.user.name;
-      if (session?.user?.id) token.id = session.user.id;
       return token;
     },
     async session({ session, token }) {
-      console.log(session, token, "Session in auth.js");
+      if (token?.accessToken) session.accessToken = token.accessToken;
 
-      if (token) {
-        session.accessToken = token.accessToken;
-        if (token.sub) session.user.id = token.sub;
-      }
       return session;
     },
   },
   pages: {
     signIn: "/signin",
   },
+  // experimental: { enableWebAuthn: true },
 });
 
 declare module "next-auth" {
   interface Session {
     accessToken?: string;
-    user?: {
-      id?: string;
-    };
   }
 }
 
 declare module "next-auth/jwt" {
   interface JWT {
     accessToken?: string;
-    id?: string;
   }
 }
