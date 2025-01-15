@@ -25,7 +25,9 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         },
       },
       async authorize(credentials): Promise<User | null> {
-        const backendLoginUrl = "http://localhost:8080/api/login";
+        console.log(credentials);
+
+        const backendLoginUrl = "http://localhost:8081/api/auth/login";
         try {
           // 2. Make HTTP POST request to your backend
           const response = await fetch(backendLoginUrl, {
@@ -41,13 +43,14 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
           }
           // 3. Process the response from the backend
           const userData = await response.json();
-          console.log(userData, "Response after login in auth.js");
+          console.log(userData, "Response after signin in auth.js");
 
           if (userData.user && userData.accessToken) {
             // The user is valid and we have received a JWT from backend. Add user data to session
             return {
               id: userData.user.id,
-              name: userData.user.userName,
+              name: userData.user.name,
+              userName: userData.user.userName,
               email: userData.user.email,
             };
           } else {
@@ -71,7 +74,8 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     async jwt({ token, trigger, session, account, profile }): Promise<JWT> {
       if (account?.provider === "google") {
         // 1. Make HTTP POST request to social login endpoint in your backend
-        const backendSocialLoginUrl = "http://localhost:8080/api/social-login";
+        const backendSocialLoginUrl =
+          "http://localhost:8081/api/auth/social-login";
         try {
           const response = await fetch(backendSocialLoginUrl, {
             method: "POST",
@@ -127,6 +131,9 @@ declare module "next-auth" {
     user?: {
       id?: string;
     };
+  }
+  interface User {
+    userName?: string;
   }
 }
 

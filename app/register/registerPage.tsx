@@ -14,6 +14,15 @@ export default function SignUpPage() {
           <input
             type="text"
             name="name"
+            placeholder="Enter your name"
+            required
+          />
+        </div>
+        <div>
+          <label>User Name</label>
+          <input
+            type="text"
+            name="username"
             placeholder="Enter your username"
             required
           />
