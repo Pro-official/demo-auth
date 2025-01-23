@@ -1,28 +1,33 @@
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { ArrowRight, Search } from "lucide-react";
-import { useId } from "react";
+import * as React from "react";
 
-export default function SearchInput() {
-  const id = useId();
+import { cn } from "@/lib/utils";
+
+const SearchInput = React.forwardRef<
+  HTMLInputElement,
+  React.ComponentProps<"input">
+>(({ className, type, ...props }, ref) => {
   return (
-    <div className="relative">
-      <Input
-        id={id}
-        className="peer pe-9 ps-9"
-        placeholder="Search My Favourite..."
-        type="search"
-      />
-      <div className="pointer-events-none absolute inset-y-0 start-0 flex items-center justify-center ps-3 text-muted-foreground/80 peer-disabled:opacity-50">
-        <Search size={30} strokeWidth={2} />
-      </div>
-      <button
-        className="absolute inset-y-0 end-0 flex h-full w-9 items-center justify-center rounded-e-lg text-muted-foreground/80 outline-offset-2 transition-colors hover:text-foreground focus:z-10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-ring/70 disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50"
-        aria-label="Submit search"
-        type="submit"
-      >
-        <ArrowRight size={30} strokeWidth={2} aria-hidden="true" />
-      </button>
-    </div>
+    <input
+      type={type}
+      style={
+        {
+          // "--spread": "90deg",
+          // "--shimmer-color": shimmerColor,
+          "--radius": "100px",
+          // "--speed": shimmerDuration,
+          // "--cut": shimmerSize,
+          // "--bg": background,
+        } as React.CSSProperties
+      }
+      className={cn(
+        "flex h-10 w-full rounded-md  px-3 py-2 text-base  file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm",
+        className
+      )}
+      ref={ref}
+      {...props}
+    />
   );
-}
+});
+SearchInput.displayName = "SearchInput";
+
+export { SearchInput };
