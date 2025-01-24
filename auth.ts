@@ -1,8 +1,6 @@
-import NextAuth, { User } from "next-auth";
+import NextAuth from "next-auth";
 import "next-auth/jwt";
-
 import Google from "next-auth/providers/google";
-import Credentials from "next-auth/providers/credentials";
 import { JWT } from "next-auth/jwt";
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
@@ -10,58 +8,58 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   theme: { logo: "https://authjs.dev/img/logo-sm.png" },
   providers: [
     Google,
-    Credentials({
-      name: "Credentials",
-      credentials: {
-        email: {
-          label: "Username",
-          type: "text",
-          placeholder: "promise@gmail.com",
-        },
-        password: {
-          label: "Password",
-          type: "password",
-          placeholder: "*******",
-        },
-      },
-      async authorize(credentials): Promise<User | null> {
-        console.log(credentials);
+    // Credentials({
+    //   name: "Credentials",
+    //   credentials: {
+    //     email: {
+    //       label: "Username",
+    //       type: "text",
+    //       placeholder: "promise@gmail.com",
+    //     },
+    //     password: {
+    //       label: "Password",
+    //       type: "password",
+    //       placeholder: "*******",
+    //     },
+    //   },
+    // async authorize(credentials): Promise<User | null> {
+    //   console.log(credentials);
 
-        const backendLoginUrl = "http://localhost:8081/api/auth/login";
-        try {
-          // 2. Make HTTP POST request to your backend
-          const response = await fetch(backendLoginUrl, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              email: credentials?.email,
-              password: credentials?.password,
-            }),
-          });
-          if (!response.ok) {
-            return null;
-          }
-          // 3. Process the response from the backend
-          const userData = await response.json();
-          console.log(userData, "Response after signin in auth.js");
+    //   const backendLoginUrl = "http://localhost:8081/api/auth/login";
+    //   try {
+    //     // 2. Make HTTP POST request to your backend
+    //     const response = await fetch(backendLoginUrl, {
+    //       method: "POST",
+    //       headers: { "Content-Type": "application/json" },
+    //       body: JSON.stringify({
+    //         email: credentials?.email,
+    //         password: credentials?.password,
+    //       }),
+    //     });
+    //     if (!response.ok) {
+    //       return null;
+    //     }
+    //     // 3. Process the response from the backend
+    //     const userData = await response.json();
+    //     console.log(userData, "Response after signin in auth.js");
 
-          if (userData.user && userData.accessToken) {
-            // The user is valid and we have received a JWT from backend. Add user data to session
-            return {
-              id: userData.user.id,
-              name: userData.user.name,
-              userName: userData.user.userName,
-              email: userData.user.email,
-            };
-          } else {
-            return null; // Invalid credentials
-          }
-        } catch (error) {
-          console.log(error);
-          return null; // Handle request errors
-        }
-      },
-    }),
+    //     if (userData.user && userData.accessToken) {
+    //       // The user is valid and we have received a JWT from backend. Add user data to session
+    //       return {
+    //         id: userData.user.id,
+    //         name: userData.user.name,
+    //         userName: userData.user.userName,
+    //         email: userData.user.email,
+    //       };
+    //     } else {
+    //       return null; // Invalid credentials
+    //     }
+    //   } catch (error) {
+    //     console.log(error);
+    //     return null; // Handle request errors
+    //   }
+    // },
+    // }),
   ],
   basePath: "/auth",
   session: { strategy: "jwt" },
