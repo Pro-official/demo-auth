@@ -2,17 +2,22 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import { Search, AudioLines } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { SearchInput } from "@/components/ui/search-input";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useScrollEffect } from "@/hooks/useScrollEffect";
 import { InteractiveHoverButton } from "./ui/interactive-hover-button";
+// import { auth } from "@/auth";
+// import { useSession } from "next-auth/react";
 
 export function Navigation() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const isScrolled = useScrollEffect();
+  // const { data: session } = useSession();
+
+  // console.log(session?.user, "In navigation");
+  // if (!session?.user) return null;
 
   return (
     <nav
@@ -25,7 +30,7 @@ export function Navigation() {
     `}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between mt-4">
+        <div className="flex items-center justify-between mt-2">
           <div className="flex-1 flex justify-start">
             <Link href="/" className="flex-shrink-0">
               <div className="flex items-center justify-between">
@@ -64,6 +69,9 @@ export function Navigation() {
                 <div className="gap-4 flex items-center">
                   <Link href="/join">
                     <InteractiveHoverButton>JOIN</InteractiveHoverButton>
+                  </Link>
+                  <Link href="/client-example">
+                    <InteractiveHoverButton>CLIENT</InteractiveHoverButton>
                   </Link>
                 </div>
               </>

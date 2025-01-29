@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Apple, Facebook, Twitter } from "lucide-react";
+import { signIn } from "@/auth";
 
 export default function SignInPage() {
   return (
@@ -46,6 +47,16 @@ export default function SignInPage() {
             </svg>
             Sign in with Google
           </Button>
+          <form
+            action={async () => {
+              "use server";
+              await signIn("google");
+            }}
+          >
+            <button className="border-2 border-white">
+              Sign in With Google
+            </button>
+          </form>
           <Button
             variant="outline"
             className="w-full flex items-center justify-center bg-zinc-800 hover:bg-zinc-700 text-zinc-100 border-zinc-700"
