@@ -1,6 +1,5 @@
 import { auth, signOut } from "@/auth";
 import { BackgroundBeamsWithCollision } from "@/components/ui/background-beams-with-collision";
-import Link from "next/link";
 
 export default async function Home() {
   const session = await auth();
@@ -27,7 +26,6 @@ export default async function Home() {
             >
               <button className="w-full p-0">Sign Out</button>
             </form>
-            <Link href="/middleware-example">Middleware</Link>
           </div>
         </h2>
       </BackgroundBeamsWithCollision>

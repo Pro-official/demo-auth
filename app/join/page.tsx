@@ -1,9 +1,14 @@
-import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Apple, Facebook, Twitter } from "lucide-react";
 import { signIn } from "@/auth";
+import { AuthError } from "next-auth";
+import { redirect } from "next/navigation";
 
-export default function SignInPage() {
+export default async function SignInPage(props: {
+  searchParams: { callbackUrl?: string | undefined };
+}) {
+  const searchParams = await Promise.resolve(props.searchParams);
+  const callbackUrl = searchParams?.callbackUrl;
   return (
     <div className="min-h-screen  text-zinc-100 flex flex-col md:flex-row-reverse">
       {/* Image Section */}
@@ -13,7 +18,7 @@ export default function SignInPage() {
           alt="Headphones on colorful background"
           //   layout="fill"
           //   objectFit="cover"
-          className="h-full w-full object-cover  grayscale"
+          className="h-full w-full object-cover grayscale"
         />
         <div className="absolute inset-0 bg-zinc-900/30" />
       </div>
@@ -48,13 +53,31 @@ export default function SignInPage() {
             Sign in with Google
           </Button>
           <form
+            // key={provider.id}
             action={async () => {
               "use server";
-              await signIn("google");
+              try {
+                await signIn("google", {
+                  redirectTo: callbackUrl ?? "",
+                });
+              } catch (error) {
+                // Signin can fail for a number of reasons, such as the user
+                // not existing, or the user not having the correct role.
+                // In some cases, you may want to redirect to a custom error
+                if (error instanceof AuthError) {
+                  return redirect(`/`);
+                }
+
+                // Otherwise if a redirects happens Next.js can handle it
+                // so you can just re-thrown the error and let Next.js handle it.
+                // Docs:
+                // https://nextjs.org/docs/app/api-reference/functions/redirect#server-component
+                throw error;
+              }
             }}
           >
-            <button className="border-2 border-white">
-              Sign in With Google
+            <button type="submit">
+              <span>Sign in with Google</span>
             </button>
           </form>
           <Button
