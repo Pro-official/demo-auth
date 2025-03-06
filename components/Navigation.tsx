@@ -67,21 +67,21 @@ export function Navigation() {
             ) : (
               <>
                 <div className="gap-4 flex items-center">
-                  <Link href="/join">
-                    <InteractiveHoverButton className="bg-[#40E0D0]">
+                  {/* <Link href="/join">
+                    <InteractiveHoverButton className="bg-[#f1c40f] text-[#0f0016]">
                       JOIN
                     </InteractiveHoverButton>
-                  </Link>
+                  </Link> */}
                   <Link href="/client-example">
                     <InteractiveHoverButton className="bg-[#30E3CA]">
-                      CLIENT
+                      Join
                     </InteractiveHoverButton>
                   </Link>
-                  <Link href="/dashboard">
-                    <InteractiveHoverButton className="bg-[#99EDC3]">
+                  {/* <Link href="/dashboard">
+                    <InteractiveHoverButton className="bg-[#1abc9c]">
                       Dash
                     </InteractiveHoverButton>
-                  </Link>
+                  </Link> */}
                 </div>
               </>
             )}

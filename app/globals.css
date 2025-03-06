@@ -49,6 +49,8 @@ body {
   }
   .dark {
     --background: #0f0016;
+    --primary-accent: #8e44ad;
+    --secondary-accent: #30e3ca;
     /* --background: #0f172a; */
     /* --background: 240 10% 3.9%; */
     --foreground: 0 0% 98%;

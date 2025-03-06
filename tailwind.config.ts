@@ -11,7 +11,6 @@ export default {
     extend: {
       colors: {
         background: "#0f0016",
-        // background: '#0f172a',
         foreground: "hsl(var(--foreground))",
         card: {
           DEFAULT: "hsl(var(--card))",
@@ -22,10 +21,12 @@ export default {
           foreground: "hsl(var(--popover-foreground))",
         },
         primary: {
+          accent: "#8e44ad",
           DEFAULT: "hsl(var(--primary))",
           foreground: "hsl(var(--primary-foreground))",
         },
         secondary: {
+          accent: "#30E3CA",
           DEFAULT: "hsl(var(--secondary))",
           foreground: "hsl(var(--secondary-foreground))",
         },
@@ -78,8 +79,14 @@ export default {
         "spin-around": "spin-around calc(var(--speed) * 2) infinite linear",
         pulse: "pulse var(--duration) ease-out infinite",
         rainbow: "rainbow var(--speed, 2s) infinite linear",
+        "background-position-spin":
+          "background-position-spin 3000ms infinite alternate",
       },
       keyframes: {
+        "background-position-spin": {
+          "0%": { backgroundPosition: "top center" },
+          "100%": { backgroundPosition: "bottom center" },
+        },
         "shimmer-slide": {
           to: {
             transform: "translate(calc(100cqw - 100%), 0)",
@@ -186,6 +193,10 @@ export default {
           },
         },
       },
+      // backgroundImage: {
+      // 	'grid-pattern': ',
+      // 	'grid-pattern-light': '
+      // }
     },
   },
   plugins: [require("tailwindcss-animate")],
