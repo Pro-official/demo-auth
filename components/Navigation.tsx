@@ -21,21 +21,21 @@ export function Navigation() {
 
   return (
     <nav
-      className={`fixed top-2 left-0 right-0 z-50 transition-all duration-300 ease-in-out
+      className={`fixed left-0 right-0 z-50 transition-all duration-300 ease-in-out p-2
       ${
         isScrolled
-          ? "bg-zinc-900 shadow-lg backdrop-blur-sm my-2 mx-4 rounded-full"
+          ? "bg-white/5 shadow-lg backdrop-blur-md my-2 mx-48 rounded-full"
           : "bg-transparent"
       }
     `}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between mt-2">
+        <div className="flex items-center justify-between">
           <div className="flex-1 flex justify-start">
             <Link href="/" className="flex-shrink-0">
               <div className="flex items-center justify-between">
                 <AudioLines className="h-8 w-8 mx-3 text-zinc-400" />
-                <strong>TrueNaad</strong>
+                <h1 className="text-xl font-bold">TrueNaad</h1>
               </div>
             </Link>
           </div>
@@ -68,10 +68,19 @@ export function Navigation() {
               <>
                 <div className="gap-4 flex items-center">
                   <Link href="/join">
-                    <InteractiveHoverButton>JOIN</InteractiveHoverButton>
+                    <InteractiveHoverButton className="bg-[#40E0D0]">
+                      JOIN
+                    </InteractiveHoverButton>
                   </Link>
                   <Link href="/client-example">
-                    <InteractiveHoverButton>CLIENT</InteractiveHoverButton>
+                    <InteractiveHoverButton className="bg-[#30E3CA]">
+                      CLIENT
+                    </InteractiveHoverButton>
+                  </Link>
+                  <Link href="/dashboard">
+                    <InteractiveHoverButton className="bg-[#99EDC3]">
+                      Dash
+                    </InteractiveHoverButton>
                   </Link>
                 </div>
               </>

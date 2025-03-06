@@ -24,7 +24,7 @@ export default async function SignInPage(props: {
       </div>
 
       {/* Sign-in Section */}
-      <div className="w-full md:w-1/2 flex flex-col items-center justify-center p-8 bg-zinc-900">
+      <div className="w-full md:w-1/2 flex flex-col items-center justify-center p-8 bg-[#0f0016]">
         <h1 className="text-4xl font-bold mb-8 text-zinc-100">Welcome Back</h1>
         <div className="space-y-4 w-full max-w-sm">
           <Button

@@ -15,7 +15,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "TrueNaad",
-  description: "Your Own AudioBook Library",
+  description: "Your AudioBook Library",
 };
 
 export default async function RootLayout({
