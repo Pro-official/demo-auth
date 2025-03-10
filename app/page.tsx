@@ -1,75 +1,18 @@
-// import { auth, signOut } from "@/auth";
-// import { BackgroundBeamsWithCollision } from "@/components/ui/background-beams-with-collision";
-// import Link from "next/link";
-
-// export default async function Home() {
-//   const session = await auth();
-//   console.log("from home", session?.user);
-
-//   return (
-//     <>
-//       <BackgroundBeamsWithCollision className="lg:max-w-7xl mx-auto flex-col text-left">
-//         <h1 className="text-2xl z-20 md:text-4xl lg:text-7xl font-bold text-center text-black dark:text-white font-sans tracking-tight">
-//           Listen, Learn & Love
-//         </h1>
-//         <br />
-//         <div className="max-w-lg mx-auto">
-//           <p>
-//             Full or Summarized audiobooks. Access anytime, anywhere. Choose from
-//             more than 10,000 books.
-//           </p>
-//         </div>
-//       </BackgroundBeamsWithCollision>
-//       <div className="max-h-screen">
-//         <h1>Hello my name is Promise</h1>
-//         <h1>Hello my name is Promise</h1>
-//         <h1>Hello my name is Promise</h1>
-//         <h1>Hello my name is Promise</h1>
-//         <h1>Hello my name is Promise</h1>
-//         <h1>Hello my name is Promise</h1>
-//         <h1>Hello my name is Promise</h1>
-//         <h1>Hello my name is Promise</h1>
-//         <h1>Hello my name is Promise</h1>
-//         <h1>Hello my name is Promise</h1>
-//         <h1>Hello my name is Promise</h1>
-//         <h1>Hello my name is Promise</h1>
-//         <h1>Hello my name is Promise</h1>
-//         <h1>Hello my name is Promise</h1>
-//         <h1>Hello my name is Promise</h1>
-//         <h1>Hello my name is Promise</h1>
-//         <h1>Hello my name is Promise</h1>
-//         <h1>Hello my name is Promise</h1>
-//         <h1>Hello my name is Promise</h1>
-//         <h1>Hello my name is Promise</h1>
-//         <h1>Hello my name is Promise</h1>
-//         <h1>Hello my name is Promise</h1>
-//         <h1>Hello my name is Promise</h1>
-//         <h1>Hello my name is Promise</h1>
-//         <h1>Hello my name is Promise</h1>
-//         <h1>Hello my name is Promise</h1>
-//         <h1>Hello my name is Promise</h1>
-//         <h1>Hello my name is Promise</h1>
-//         <h1>Hello my name is Promise</h1>
-//         <h1>Hello my name is Promise</h1>
-//         <h1>Hello my name is Promise</h1>
-//         <h1>Hello my name is Promise</h1>
-//       </div>
-//     </>
-//   );
-// }
-
 "use client";
 
 import { Play, Pause, SkipBack, SkipForward } from "lucide-react";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef } from "react";
 import { Slider } from "@/components/ui/slider";
 import { Button } from "@/components/ui/button";
 import { NeonGradientCard } from "@/components/ui/neon-gradient-card";
+// import GirlWithHeadphone from "@/public/GirlWithHeadphone.webp";
+// import Image from "next/image";
 
 export default function Home() {
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
+  const [cardHeight, setCardHeight] = useState(510);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   const togglePlayPause = () => {
@@ -145,101 +88,28 @@ export default function Home() {
           </p>
         </div>
 
-        {/* Audio Player */}
-        {/* <div className="max-w-3xl mx-auto bg-black/30 backdrop-blur-xl p-8 rounded-2xl border border-white/10">
-          <audio
-            ref={audioRef}
-            onTimeUpdate={handleTimeUpdate}
-            onLoadedMetadata={handleLoadedMetadata}
-            src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"
-          />
-
-          <div className="flex flex-col gap-6">
-            <div className="flex items-center justify-between text-white/80">
-              <span>{formatTime(currentTime)}</span>
-              <span>{formatTime(duration)}</span>
-            </div>
-
-            <Slider
-              value={[currentTime]}
-              max={duration}
-              step={0.1}
-              onValueChange={handleSliderChange}
-              className="my-4"
-            />
-
-            <div className="flex items-center justify-center gap-4">
-              <Button
-                variant="ghost"
-                size="icon"
-                className="text-white/80 hover:text-white hover:bg-white/10"
-                onClick={() => {
-                  if (audioRef.current) {
-                    audioRef.current.currentTime = Math.max(
-                      0,
-                      currentTime - 10
-                    );
-                  }
-                }}
-              >
-                <SkipBack className="h-6 w-6" />
-              </Button>
-
-              <Button
-                variant="outline"
-                size="icon"
-                className="w-16 h-16 rounded-full border-2 border-[#30E3CA] hover:bg-[#30E3CA]/20"
-                onClick={togglePlayPause}
-              >
-                {isPlaying ? (
-                  <Pause className="h-8 w-8 text-[#30E3CA]" />
-                ) : (
-                  <Play className="h-8 w-8 text-[#30E3CA] ml-1" />
-                )}
-              </Button>
-
-              <Button
-                variant="ghost"
-                size="icon"
-                className="text-white/80 hover:text-white hover:bg-white/10"
-                onClick={() => {
-                  if (audioRef.current) {
-                    audioRef.current.currentTime = Math.min(
-                      duration,
-                      currentTime + 10
-                    );
-                  }
-                }}
-              >
-                <SkipForward className="h-6 w-6" />
-              </Button>
-            </div>
-          </div>
-        </div> */}
-
-        <NeonGradientCard className="max-w-sm items-center justify-center text-center">
-          <div className="max-w-3xl mx-auto bg-black/30 backdrop-blur-xl p-8 rounded-2xl border border-white/10">
-            <audio
+        <NeonGradientCard className="max-w-sm mx-auto items-center justify-center text-center">
+          <div className="max-w-sm mx-auto mx-auto bg-black/30 backdrop-blur-xl p-4 rounded-2xl border border-white/40">
+            <div>
+              {/* <Image src={`/GirlWithHeadphone.webp`} alt="A Tiger laying on the ground"  width="200" height="150"/> */}
+              <img src='/GirlWithHeadphone.webp' alt="A Tiger laying on the ground" height="300" onLoad={(e) => setCardHeight(e.currentTarget.offsetHeight + 100)}/>
+              <audio
               ref={audioRef}
               onTimeUpdate={handleTimeUpdate}
               onLoadedMetadata={handleLoadedMetadata}
               src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"
             />
-
-            <div className="flex flex-col gap-6">
-              <div className="flex items-center justify-between text-white/80">
+              <div className="flex items-center justify-between text-white/80 mt-4">
                 <span>{formatTime(currentTime)}</span>
                 <span>{formatTime(duration)}</span>
               </div>
-
               <Slider
                 value={[currentTime]}
                 max={duration}
                 step={0.1}
                 onValueChange={handleSliderChange}
-                className="my-4"
+                className="my-2"
               />
-
               <div className="flex items-center justify-center gap-4">
                 <Button
                   variant="ghost"
@@ -288,9 +158,6 @@ export default function Home() {
               </div>
             </div>
           </div>
-          {/* <span className="pointer-events-none z-10 h-full whitespace-pre-wrap bg-gradient-to-br from-[#ff2975] from-35% to-[#00FFF1] bg-clip-text text-center text-6xl font-bold leading-none tracking-tighter text-transparent dark:drop-shadow-[0_5px_5px_rgba(0,0,0,0.8)]">
-            Neon Gradient Card
-          </span> */}
         </NeonGradientCard>
       </div>
     </main>

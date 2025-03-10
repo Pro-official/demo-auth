@@ -63,6 +63,7 @@ interface NeonGradientCardProps {
    * The colors of the neon gradient
    * */
   neonColors?: NeonColorsProps
+  cardHeight?: number; 
 
   [key: string]: any
 }
@@ -76,15 +77,18 @@ const NeonGradientCard: React.FC<NeonGradientCardProps> = ({
     firstColor: "#ff00aa",
     secondColor: "#00FFF1",
   },
+  cardHeight = 510,
   ...props
 }) => {
   const containerRef = useRef<HTMLDivElement>(null)
-  const [dimensions, setDimensions] = useState({ width: 0, height: 0 })
+  const [dimensions, setDimensions] = useState({ width: 0, height: 510 })
 
   useEffect(() => {
     const updateDimensions = () => {
       if (containerRef.current) {
         const { offsetWidth, offsetHeight } = containerRef.current
+        console.log(offsetWidth, offsetHeight, 'inside children change');
+        
         setDimensions({ width: offsetWidth, height: offsetHeight })
       }
     }
@@ -98,11 +102,16 @@ const NeonGradientCard: React.FC<NeonGradientCardProps> = ({
   }, [])
 
   useEffect(() => {
+    console.log(children, 'did children changed?');
+    
     if (containerRef.current) {
       const { offsetWidth, offsetHeight } = containerRef.current
       setDimensions({ width: offsetWidth, height: offsetHeight })
     }
   }, [children])
+
+  console.log(dimensions.width, dimensions.height);
+  
 
   return (
     <div
@@ -114,7 +123,7 @@ const NeonGradientCard: React.FC<NeonGradientCardProps> = ({
           "--neon-first-color": neonColors.firstColor,
           "--neon-second-color": neonColors.secondColor,
           "--card-width": `${dimensions.width}px`,
-          "--card-height": `${dimensions.height}px`,
+          "--card-height": `${cardHeight}px`,
           "--card-content-radius": `${borderRadius - borderSize}px`,
           "--pseudo-element-background-image": `linear-gradient(0deg, ${neonColors.firstColor}, ${neonColors.secondColor})`,
           "--pseudo-element-width": `${dimensions.width + borderSize * 2}px`,
@@ -130,7 +139,7 @@ const NeonGradientCard: React.FC<NeonGradientCardProps> = ({
     >
       <div
         className={cn(
-          "relative size-full min-h-[inherit] rounded-[var(--card-content-radius)] bg-gray-100 p-6",
+          "relative size-full min-h-[var(--card-height)] rounded-[var(--card-content-radius)] bg-gray-100 p-6",
           "before:absolute before:-left-[var(--border-size)] before:-top-[var(--border-size)] before:-z-10 before:block",
           "before:h-[var(--pseudo-element-height)] before:w-[var(--pseudo-element-width)] before:rounded-[var(--border-radius)] before:content-['']",
           "before:bg-[linear-gradient(0deg,var(--neon-first-color),var(--neon-second-color))] before:bg-[length:100%_200%]",
